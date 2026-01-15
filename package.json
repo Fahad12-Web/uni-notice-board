@@ -1,0 +1,34 @@
+{
+  "name": "uni-notice-board",
+  "version": "1.0.0",
+  "description": "University Digital Notice Board Project",
+  "scripts": {
+    "lint:html": "htmlhint src/**/*.html",
+    "lint:css": "stylelint styles/**/*.css",
+    "build": "parcel build src/index.html --dist-dir dist"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Fahad12-Web/uni-notice-board.git"
+  },
+  "keywords": [
+    "university",
+    "notice-board",
+    "html",
+    "parcel",
+    "ci"
+  ],
+  "author": "Fahad Ali",
+  "license": "ISC",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/Fahad12-Web/uni-notice-board/issues"
+  },
+  "homepage": "https://github.com/Fahad12-Web/uni-notice-board#readme",
+  "devDependencies": {
+    "htmlhint": "^1.8.0",
+    "parcel": "^2.16.3",
+    "stylelint": "^17.0.0",
+    "stylelint-config-standard": "^40.0.0"
+  }
+}
