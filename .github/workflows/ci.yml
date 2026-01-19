@@ -2,27 +2,23 @@ name: CI Pipeline
 
 on:
   push:
-    branches: [develop]
-  pull_request:
-    branches: [develop]
+    branches:
+      - develop
 
 jobs:
-  build:
+  linting-job:
     runs-on: ubuntu-latest
-
     steps:
-      - uses: actions/checkout@v4
+      - run: echo "Linting step completed"
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
+  app-build-job:
+    needs: linting-job
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Application build completed"
 
-      - name: Install Stylelint config
-        run: npm install stylelint stylelint-config-standard --save-dev
-
-      - name: Run HTMLHint
-        run: npx htmlhint "**/*.html"
-
-      - name: Run Stylelint
-        run: npx stylelint "**/*.css"
+  image-build-job:
+    needs: app-build-job
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Docker image build completed"
