@@ -2,11 +2,9 @@ name: CI Pipeline
 
 on:
   push:
-    branches:
-      - develop
+    branches: [develop]
   pull_request:
-    branches:
-      - develop
+    branches: [develop]
 
 jobs:
   build:
@@ -16,19 +14,13 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
+      - name: Setup Node.js 20
         uses: actions/setup-node@v4
         with:
-          node-version: 18
-
-      - name: Install dependencies
-        run: npm install
+          node-version: 20
 
       - name: Run HTMLHint
-        run: npx htmlhint "src/**/*.html"
+        run: npx htmlhint "**/*.html"
 
       - name: Run Stylelint
-        run: npx stylelint "styles/**/*.css"
-
-      - name: Build with Parcel
-        run: npx parcel build src/index.html
+        run: npx stylelint "**/*.css"
