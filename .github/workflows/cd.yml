@@ -1,29 +1,17 @@
-name: CD Pipeline
 
+name: cd-dev-wf
 on:
   push:
     branches:
       - develop
-
+      - main
 jobs:
-  deploy:
+  deploy-dev-job:
     runs-on: ubuntu-latest
-    environment: development
-
+    environment: "Development_enviroment"
     steps:
-    - name: Checkout Code
-      uses: actions/checkout@v4
+      - name: Welcome To Dev-CD
+        run: echo "Your App Is Going to Be deployed at Render.com"
+      - name: Deploy App
+        run: curl -X POST ${{secrets.RENDER_CALLBACK_URL}}
 
-    - name: Login to Docker Hub
-      uses: docker/login-action@v3
-      with:
-        username: ${{ secrets.DOCKERHUB_USERNAME }}
-        password: ${{ secrets.DOCKERHUB_TOKEN }}
-
-    - name: Pull Docker Image
-      run: |
-        docker pull dockerhubusername/imagename:latest
-
-    - name: Deploy to Render
-      run: |
-        curl -X POST ${{ secrets.RENDER_CALLBACK_URL }}
