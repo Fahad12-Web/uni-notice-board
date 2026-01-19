@@ -1,4 +1,11 @@
-FROM nginx:alpine
-# Agar aapki index.html main folder mein hai, to '.' use karein
-COPY . /usr/share/nginx/html
-EXPOSE 80
+FROM node:alpine AS app-build-stage
+WORKDIR /app
+COPY package*.json .
+RUN npm install
+COPY . .
+# RUN npx htmlhint "**/*.html"
+# RUN npx stylelint "**/*.css"
+RUN npx parcel build "./src/*.html" --dist-dir "./dist" --public-url "./" --no-cache
+
+FROM nginx:alpine AS deploy-stage
+COPY --from=app-build-stage /app/dist /usr/share/nginx/html
