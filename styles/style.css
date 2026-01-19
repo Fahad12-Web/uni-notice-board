@@ -39,3 +39,37 @@ footer {
   text-align: center;
   padding: 10px;
 }
+
+
+main section {
+  margin-top: 20px;
+}
+
+main section article {
+  background-color: #f9f9f9;
+  padding: 15px;
+  margin-bottom: 15px;
+  border-left: 5px solid #0055a5;
+  border-radius: 5px;
+}
+
+main section article h3 {
+  margin: 0 0 8px 0;
+  color: #036;
+}
+
+main section article time {
+  display: block;
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 8px;
+}
+
+main section article p {
+  margin: 0;
+  color: #333;
+  font-size: 14px;
+}
+
+
+
