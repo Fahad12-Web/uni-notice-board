@@ -1,4 +1,4 @@
-name: cd-dev-wf # Yeh wahi naam hai jo aapne manga tha
+name: cd-dev-wf
 
 on:
   push:
@@ -6,25 +6,11 @@ on:
       - develop
 
 jobs:
-  deploy-dev-job: # Single box interface ke liye
+  deploy-dev-job:
     runs-on: ubuntu-latest
     environment: development
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-
-      - name: Log in to Docker Hub
-        uses: docker/login-action@v2
-        with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
-
-      - name: Build and Push Docker Image
-        uses: docker/build-push-action@v4
-        with:
-          context: .
-          push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/uni-notice-board:latest
-
       - name: Trigger Render Deployment
         run: curl -X GET ${{ secrets.RENDER_CALLBACK_URL }}
