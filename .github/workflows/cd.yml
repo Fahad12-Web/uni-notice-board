@@ -1,17 +1,35 @@
+name: Continuous Deployment
 
-name: cd-dev-wf
 on:
   push:
     branches:
       - develop
-      - main
-jobs:
-  deploy-dev-job:
-    runs-on: ubuntu-latest
-    environment: "Development_enviroment"
-    steps:
-      - name: Welcome To Dev-CD
-        run: echo "Your App Is Going to Be deployed at Render.com"
-      - name: Deploy App
-        run: curl -X POST ${{secrets.RENDER_CALLBACK_URL}}
 
+jobs:
+  linting-job:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Linting completed"
+
+  app-build-job:
+    needs: linting-job
+    runs-on: ubuntu-latest
+    steps:
+      - name: Login to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: Build and Push
+        uses: docker/build-push-action@v4
+        with:
+          push: true
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/uni-notice-board:latest
+
+  image-build-job:
+    needs: app-build-job
+    runs-on: ubuntu-latest
+    environment: development
+    steps:
+      - name: Trigger Render
+        run: curl -X GET ${{ secrets.RENDER_CALLBACK_URL }}
